@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import random, re, os,time
 
 
-download_folder = "C:/Users/itzan/Documents/Scrapper"
+download_folder = "ENTER_PATH_HERE"
 
 
 artists = ["drakeofficial","joji"]
@@ -58,6 +58,12 @@ for artists in music_id:
         download_link = driver.find_element(By.CSS_SELECTOR, 'body > form > div:nth-child(2) > a:nth-child(1)').get_attribute('href')
         initial_count = len([f for f in os.listdir(download_folder) if f.endswith(".mp3")])
         file_downloaded = False
+        driver.get(download_link)
+        while not file_downloaded:
+            time.sleep(1)
+            current_count = len([f for f in os.listdir(download_folder) if f.endswith(".mp3")])
+            if current_count > initial_count:
+                file_downloaded = True
         time.sleep(random.randint(2,10))
         random_number = random.randint(0,9999)
         if random_number%3==0:
